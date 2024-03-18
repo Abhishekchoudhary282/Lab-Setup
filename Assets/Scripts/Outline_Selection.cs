@@ -8,7 +8,7 @@ public class Outline_Selection : MonoBehaviour
     private Transform highlight;
     private Transform selection;
     private RaycastHit raycastHit;
-
+    public bool isSelected = false;
     void Update()
     {
         // Highlight
@@ -20,6 +20,7 @@ public class Outline_Selection : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
         {
+            
             highlight = raycastHit.transform;
             if (highlight.CompareTag("Selectable") && highlight != selection)
             {
@@ -31,7 +32,7 @@ public class Outline_Selection : MonoBehaviour
                 {
                     Outline outline = highlight.gameObject.AddComponent<Outline>();
                     outline.enabled = true;
-                    highlight.gameObject.GetComponent<Outline>().OutlineColor = Color.magenta;
+                    highlight.gameObject.GetComponent<Outline>().OutlineColor = Color.red;
                     highlight.gameObject.GetComponent<Outline>().OutlineWidth = 7.0f;
                 }
             }
@@ -58,6 +59,7 @@ public class Outline_Selection : MonoBehaviour
             {
                 if (selection)
                 {
+                    isSelected = true;
                     selection.gameObject.GetComponent<Outline>().enabled = false;
                     selection = null;
                 }
